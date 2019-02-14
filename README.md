@@ -3,6 +3,11 @@ If you use multiple proxies and you want to define rules to set specific proxy p
 Simply create a ~/.pacgen.yml config file and define your rules there.
 After that run updatepac command in your terminal and it will create ~/.proxy.pac
 
+# Installation
+```
+    pip install pacgen
+```
+
 
 # Sample ~/.pacgen.yml
 ```
