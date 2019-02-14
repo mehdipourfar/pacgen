@@ -6,7 +6,7 @@ with open('README.md') as f:
 
 setup(
     name='PacGen',
-    version='0.1.1',
+    version='0.1.2',
     packages=['pacgen'],
     license='MIT License',
     url='https://github.com/mehdipourfar/pacgen',
