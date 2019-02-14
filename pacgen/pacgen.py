@@ -1,6 +1,3 @@
-#!/usr/bin/env python3.6
-
-import argparse
 from urllib.parse import urlparse
 import yaml
 
@@ -32,7 +29,10 @@ class PacGen:
             'socks4': 'SOCKS4',
             'socks5': 'SOCKS5'
         }.get(parsed_url.scheme.lower(), 'SOCKS5')
-        return f'{scheme} {parsed_url.netloc}'
+        return '{} {}'.format(
+            scheme,
+            parsed_url.netloc
+        )
 
     @property
     def default_proxy(self):
@@ -40,16 +40,16 @@ class PacGen:
 
     def get_route_condition(self, route):
         proxy = self.proxies[self.routes[route]]
-        return f"""
+        return """
           if (host === '{route}') {{
             return '{proxy}';
-          }}"""
+          }}""".format(route=route, proxy=proxy)
 
     def get_exclude_condition(self, excluded_url):
-        return f"""
+        return """
           if (dnsDomainIs(host, '{excluded_url}')) {{
             return 'DIRECT';
-          }}"""
+          }}""".format(excluded_url=excluded_url)
 
     def generate_pac(self, output):
         route_conditions = ''.join(
@@ -58,23 +58,15 @@ class PacGen:
         exclude_conditions = ''.join(
             map(self.get_exclude_condition, self.excludes)
         )
-        pac = f"""
+        pac = """
         function FindProxyForURL(url, host) {{
             {exclude_conditions}
             {route_conditions}
-          return '{self.default_proxy}';
-        }}""".strip()
+          return '{default_proxy}';
+        }}""".format(
+            exclude_conditions=exclude_conditions,
+            route_conditions=route_conditions,
+            default_proxy=self.default_proxy
+        ).strip()
         with open(output, 'w') as f:
             f.write(pac)
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--config', dest='config',
-                        required=True, help="yml config file")
-    parser.add_argument('-o', '--output', dest='output',
-                        required=True, help="output pac path")
-    args = parser.parse_args()
-
-    pacgen = PacGen(args.config)
-    pacgen.generate_pac(args.output)

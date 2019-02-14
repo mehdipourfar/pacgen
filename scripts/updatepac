@@ -1,0 +1,17 @@
+#!/usr/bin/env python
+
+import os
+from pacgen.pacgen import PacGen
+
+
+if __name__ == '__main__':
+    config_file = os.path.join(
+        os.path.expanduser('~'),
+        '.pacgen.yml'
+    )
+    pacgen = PacGen(config_file)
+    output = os.path.join(
+        os.path.expanduser('~'),
+        '.proxy.pac'
+    )
+    pacgen.generate_pac(output)
