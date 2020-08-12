@@ -12,4 +12,5 @@ setup(
     url='https://github.com/mehdipourfar/pacgen',
     scripts=['scripts/updatepac'],
     long_description=long_description,
+    install_requires=['PyYAML'],
 )
