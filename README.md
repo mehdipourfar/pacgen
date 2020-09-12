@@ -1,7 +1,7 @@
 # PacGen: Pac file generator written in Python
 If you use multiple proxies and you want to define rules to set specific proxy per specific host, this package can help you.
 Simply create a ~/.pacgen.yml config file and define your rules there.
-After that run updatepac command in your terminal and it will create ~/.proxy.pac
+After that run `updatepac` command in your terminal and it will create ~/.proxy.pac
 
 # Installation
 ```
