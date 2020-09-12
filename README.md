@@ -27,3 +27,19 @@ excludes:
   - bank.com
   - lastpass.com
 ```
+
+# Note
+Unfortunately, Chrome will not work anymore with a local PAC file path.
+As a workaround, you can serve it yourself with a webserver like nginx.
+
+```
+sudo apt install nginx
+sudo cp ~/.proxy.pac /var/www/html/proxy.pac
+
+```
+
+Then put this address in your proxy setting:
+
+```
+http://localhost/proxy.pac
+```
